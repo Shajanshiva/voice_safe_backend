@@ -1,0 +1,25 @@
+# Security - CRITICAL: Never commit your secret keys!
+.env
+.env.*
+
+# Python compiled files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Virtual Environments (where your libraries are installed)
+venv/
+env/
+.venv/
+.env/
+
+# IDE settings (Visual Studio Code, PyCharm, etc.)
+.vscode/
+.idea/
+
+# Operating System files
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log

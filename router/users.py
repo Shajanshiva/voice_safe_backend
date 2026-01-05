@@ -6,7 +6,7 @@ from schemas import UserBase
 from auth import hash_password, verify_password
 from jwt_token import create_access_token
 from dependencies import get_current_user
-from schemas import UserResponse
+from schemas import UserBase, UserResponse, userLogin
 from fastapi import HTTPException, status
 from fastapi.security import OAuth2PasswordRequestForm
 
@@ -65,12 +65,12 @@ def delete_user(user_id: int, db: Session = Depends(get_db)):
 
 @router.post("/login")
 def login_user(
-    form_data: OAuth2PasswordRequestForm = Depends(),
+    user_credentials: userLogin,
     db: Session = Depends(get_db)
 ):
-    user = db.query(User).filter(User.email == form_data.username).first()
+    user = db.query(User).filter(User.email == user_credentials.email).first()
 
-    if not user or not verify_password(form_data.password, user.password):
+    if not user or not verify_password(user_credentials.password, user.password):
         raise HTTPException(
             status_code=status.HTTP_401_UNAUTHORIZED,
             detail="Invalid email or password"

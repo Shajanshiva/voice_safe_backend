@@ -2,7 +2,6 @@ import os
 from dotenv import load_dotenv
 from sqlalchemy import create_engine, text
 
-# Force reload of environment variables
 load_dotenv(override=True)
 
 db_url = os.getenv("DATABASE_URL")

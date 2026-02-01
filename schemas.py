@@ -7,6 +7,11 @@ class UserBase(BaseModel):
     email: str
     password: str
 
+class UserUpdate(BaseModel):
+    full_name: str
+    email: str
+    password: Optional[str] = None
+
 class UserResponse(BaseModel):
     user_id: int
     full_name: str

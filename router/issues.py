@@ -15,8 +15,7 @@ def get_all_issues(db:Session = Depends(get_db)):
 
 @router.get("/category-count")
 def category_count(
-    db: Session = Depends(get_db),
-    current_user: int = Depends(get_current_user) 
+    db: Session = Depends(get_db)
 ):
     result = (
         db.query(Issue.category_name, func.count(Issue.issue_id))
@@ -96,3 +95,7 @@ def delete_issue(issue_id:int, db:Session = Depends(get_db)):
         return "Issue deleted successfully"
     else:
         return {"message":"Issue not found"}
+
+@router.get("/user/my-issues")
+def get_user_issues(db: Session = Depends(get_db), current_user: int = Depends(get_current_user)):
+    return db.query(Issue).filter(Issue.user_id == current_user).all()

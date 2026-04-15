@@ -1,28 +1,34 @@
 from fastapi import FastAPI
-from .database import Base, engine
-from .routers import users, issues, comments
+from app.database import Base, engine
+from app.routers import users, issues, comments
 from fastapi.middleware.cors import CORSMiddleware
 
 app = FastAPI()
 
-# Move origins to a list for better management
-origins = [
-    "https://voice-safe.vercel.app",
-    "http://localhost:3000",
-    "http://localhost:5173",
-    "http://localhost:8000",
-    "http://127.0.0.1:8000",
-    "http://127.0.0.1:5500", # Live Server default
-]
-
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=origins,
-    allow_origin_regex="https://.*\.vercel\.app", # Allow all Vercel subdomains
+    allow_origins=["*"],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
 )
+
+from fastapi import Response, Request
+
+@app.middleware("http")
+async def cors_handler(request: Request, call_next):
+    if request.method == "OPTIONS":
+        return Response(
+            status_code=204,
+            headers={
+                "Access-Control-Allow-Origin": "*",
+                "Access-Control-Allow-Methods": "POST, GET, OPTIONS, PUT, DELETE",
+                "Access-Control-Allow-Headers": "Content-Type, Authorization",
+            },
+        )
+    response = await call_next(request)
+    response.headers["Access-Control-Allow-Origin"] = "*"
+    return response
 
 @app.get("/")
 def read_root():

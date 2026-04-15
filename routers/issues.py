@@ -1,10 +1,10 @@
 from fastapi import APIRouter, Depends
 from sqlalchemy.orm import Session
-from ..database import get_db
-from ..models import Issue, User
-from ..schemas import IssueBase
+from app.database import get_db
+from app.models import Issue, User
+from app.schemas import IssueBase
 from sqlalchemy import func
-from ..dependencies import get_current_user
+from app.dependencies import get_current_user
 
 router = APIRouter(prefix= "/issues")
 

@@ -1,6 +1,6 @@
 from fastapi import FastAPI
-from app.database import Base, engine
-from app.routers import users, issues, comments
+from database import Base, engine
+from routers import users, issues, comments
 from fastapi.middleware.cors import CORSMiddleware
 
 app = FastAPI()

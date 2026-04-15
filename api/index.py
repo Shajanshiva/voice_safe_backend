@@ -5,8 +5,8 @@ from fastapi import FastAPI
 # Add the parent directory to sys.path so 'app' can be found
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
-from app.database import Base, engine
-from app.routers import users, issues, comments
+from database import Base, engine
+from routers import users, issues, comments
 from fastapi.middleware.cors import CORSMiddleware
 
 app = FastAPI()
